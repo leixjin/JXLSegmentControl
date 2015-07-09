@@ -85,15 +85,17 @@
     CGContextSetStrokeColorWithColor(context, (self.lineColor == nil ? [UIColor grayColor] : self.lineColor).CGColor);
     CGFloat verticalLineWidth = self.bottomLineHeight == 0 ? 0.5 : self.bottomLineHeight;
     CGContextStrokeRect(context, CGRectMake(0, rect.size.height - verticalLineWidth, rect.size.width, verticalLineWidth));
+    //底部分割线尺寸
+    CGFloat lineHeight = self.sliderHeight == 0 ? 3 : self.sliderHeight;
+    lineView.frame = CGRectMake(0, rect.size.height - lineHeight, rect.size.width / btnCount, lineHeight);
+    //底部分割线颜色
+    lineView.backgroundColor = self.sliderColor == nil ? skyBlueColor : self.sliderColor;
     //竖直分割线
     for (int i = 1; i < btnCount; i++) {
         CGFloat lineX = i * (rect.size.width / btnCount);
         CGContextStrokeRect(context, CGRectMake(lineX, 0, self.verticalLineWidth == 0 ? 0.1 : self.verticalLineWidth, rect.size.height));
     }
-    
-    CGFloat lineHeight = self.sliderHeight == 0 ? 3 : self.sliderHeight;
-    lineView.frame = CGRectMake(0, rect.size.height - lineHeight, rect.size.width / btnCount, lineHeight);
-    
+    //设置按钮们的属性
     for (UIButton *button in self.subviews) {
         if (button.class == [UIButton class]) {
             [button setTitleColor:self.titleNormalColor == nil ? [UIColor blackColor] : self.titleNormalColor forState:UIControlStateNormal];
